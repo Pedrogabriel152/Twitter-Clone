@@ -14,6 +14,12 @@ class Route extends Bootstrap {
 			'action' => 'index'
 		);
 
+		$routes['inscreverser'] = array(
+			'route' => '/inscreverse',
+			'controller' => 'indexController',
+			'action' => 'inscreverse'
+		);
+
 		$this->setRoutes($routes);
 	}
 

@@ -87,6 +87,18 @@ class AppController extends Action
         header('Location: /quem_seguir');
     }
 
+    public function remover() {
+        session_start();
+        $this->validaAutenticacao();
+
+        $tweet = Container::getModel('Tweet');
+        $tweet->__set('id', $_GET['id']);
+
+        $tweet->delete();
+
+        header('Location: /timeline');
+    }
+
 }
 
 ?>

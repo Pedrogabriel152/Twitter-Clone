@@ -14,16 +14,53 @@ class IndexController extends Action {
 	}
 
 	public function inscreverse() {
+		$this->view->usuario = array(
+			'nome' => '',
+			'email' => '',
+			'senha' => ''
+		);
+		$this->view->erroCadastro = false;
 		$this->render('inscreverse');
 	}
 
 	public function registrar() {
 		// receber os dados
-		$usuario = new Usuario();
+		$usuario = Container::getModel('Usuario');
 		
-		// sucesso
+		$usuario->__set('nome', $_POST['nome']);
+		$usuario->__set('senha', $_POST['senha']);
+		$usuario->__set('email', $_POST['email']);
 
 		// erro
+		if(!$usuario->validarCadastro()) {
+			$this->view->usuario = array(
+				'nome' => $_POST['nome'],
+				'email' => $_POST['email'],
+				'senha' => $_POST['senha']
+			);
+			$this->view->erroCadastro = true;
+			$this->render('inscreverse');
+			exit();
+		}
+
+		// Verificar se usuario existe
+		$usuarioExist = $usuario->findByEmail();
+
+		if($usuarioExist) {
+			$this->view->usuario = array(
+				'nome' => $_POST['nome'],
+				'email' => $_POST['email'],
+				'senha' => $_POST['senha']
+			);
+			$this->view->erroCadastro = true;
+			$this->render('inscreverse');
+			exit();
+		}
+
+		// sucesso
+		$usuario->salvar();
+
+		$this->render('cadastro');
 	}
 
 }

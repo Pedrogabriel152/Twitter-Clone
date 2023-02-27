@@ -33,8 +33,35 @@ class Usuario extends Model
 
 
     // Fazer a validacao
+    public function validarCadastro() {
+        $valido = true;
+
+        if(strlen($this->__get('nome')) < 3) {
+            $valido = false;
+        }
+
+        if(strlen($this->__get('email')) < 3) {
+            $valido = false;
+        }
+
+        if(strlen($this->__get('senha')) < 3) {
+            $valido = false;
+        }
+
+        return $valido;
+    }
 
     // Recuperar um usuario por e-mail
+    public function findByEmail() {
+        $query = "SELECT nome, email FROM usuarios WHERE email = ?";
+
+        $stmt = $this->db->prepare($query);
+
+        $stmt->bindValue(1, $this->__get('email'));
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_OBJ);
+    }
 
     public function __get($atr) {
         return $this->$atr;
@@ -43,7 +70,6 @@ class Usuario extends Model
     public function __set($atr, $value) {
         $this->$atr = $value;
     }
-
 
 }
 

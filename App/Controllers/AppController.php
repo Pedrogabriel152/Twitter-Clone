@@ -51,6 +51,20 @@ class AppController extends Action
         return true;
     }
 
+    public function quemSeguir() {
+        session_start();
+        $this->validaAutenticacao();
+
+        $pesquisarPor = isset($_GET['pesquisarPor']) ? $_GET['pesquisarPor'] : '';
+
+        $ususario = Container::getModel('Usuario');
+        $ususario->__set('nome', $pesquisarPor);
+
+        $this->view->usuarios = $ususario->getAllByName();
+
+        $this->render('quemSeguir');
+    }
+
 }
 
 ?>

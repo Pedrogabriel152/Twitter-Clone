@@ -30,7 +30,7 @@ class IndexController extends Action {
 		
 		$usuario->__set('nome', $_POST['nome']);
 		$usuario->__set('senha', $_POST['senha']);
-		$usuario->__set('email', $_POST['email']);
+		$usuario->__set('email', md5($_POST['email']));
 
 		// erro
 		if(!$usuario->validarCadastro()) {

@@ -17,6 +17,15 @@ class IndexController extends Action {
 		$this->render('inscreverse');
 	}
 
+	public function registrar() {
+		// receber os dados
+		$usuario = new Usuario();
+		
+		// sucesso
+
+		// erro
+	}
+
 }
 
 

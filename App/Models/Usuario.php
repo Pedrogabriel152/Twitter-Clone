@@ -12,6 +12,24 @@ class Usuario extends Model
     private $senha;
 
     // Salvar
+    public function salvar() {
+        $query = "INSERT INTO usuarios(nome, email, senha) VALUES(:nome, :email, :senha)";
+
+        $nome = $this->__get('nome');
+        $email = $this->__get('email');
+        $senha = $this->__get('senha');
+
+        $stmt = $this->db->prepare($query);
+
+        $stmt->bindValue(':nome', $nome);
+        $stmt->bindValue(':email', $email);
+        $stmt->bindValue(':senha', $senha);  //md5() -> hash 32 caracteres
+
+        $stmt->execute();
+
+        return $this;
+
+    }
 
 
     // Fazer a validacao
